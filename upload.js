@@ -4,6 +4,29 @@ const form = document.getElementById('uploadForm');
 const statusDiv = document.getElementById('status');
 const submitButton = document.getElementById('submitButton');
 
+const imageProgressContainer = document.getElementById('imageProgressContainer');
+const imageProgressBar = document.getElementById('imageProgressBar');
+const apkProgressContainer = document.getElementById('apkProgressContainer');
+const apkProgressBar = document.getElementById('apkProgressBar');
+
+const uploadOptions = {
+    cacheControl: '3600',
+    upsert: false
+};
+
+function showStatus(message, type) {
+    statusDiv.textContent = message;
+    statusDiv.className = type;
+    statusDiv.style.display = 'block';
+}
+
+function updateProgress(bar, container, percentage) {
+    container.style.display = 'block';
+    const percent = Math.round(percentage);
+    bar.style.width = `${percent}%`;
+    bar.textContent = `${percent}%`;
+}
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -25,7 +48,13 @@ form.addEventListener('submit', async (e) => {
         const imagePath = `public/${Date.now()}-${imageFile.name}`;
         const { error: imageError } = await supabase.storage
             .from('images')
-            .upload(imagePath, imageFile);
+            .upload(imagePath, imageFile, {
+                ...uploadOptions,
+                onProgress: (event) => {
+                    const percentage = (event.loaded / event.total) * 100;
+                    updateProgress(imageProgressBar, imageProgressContainer, percentage);
+                }
+            });
         if (imageError) throw imageError;
         showStatus('Imagem enviada. Enviando APK...', 'success');
 
@@ -37,7 +66,13 @@ form.addEventListener('submit', async (e) => {
         const apkPath = `public/${Date.now()}-${apkFile.name}`;
         const { error: apkError } = await supabase.storage
             .from('apks')
-            .upload(apkPath, apkFile);
+            .upload(apkPath, apkFile, {
+                ...uploadOptions,
+                onProgress: (event) => {
+                    const percentage = (event.loaded / event.total) * 100;
+                    updateProgress(apkProgressBar, apkProgressContainer, percentage);
+                }
+            });
         if (apkError) throw apkError;
         showStatus('APK enviado. Salvando informações...', 'success');
 
@@ -58,6 +93,8 @@ form.addEventListener('submit', async (e) => {
 
         showStatus('Aplicativo publicado com sucesso!', 'success');
         form.reset();
+        imageProgressContainer.style.display = 'none';
+        apkProgressContainer.style.display = 'none';
 
     } catch (error) {
         console.error('Erro no processo de upload:', error);
@@ -67,9 +104,3 @@ form.addEventListener('submit', async (e) => {
         submitButton.textContent = 'Enviar';
     }
 });
-
-function showStatus(message, type) {
-    statusDiv.textContent = message;
-    statusDiv.className = type;
-    statusDiv.style.display = 'block';
-}
