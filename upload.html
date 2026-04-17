@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APK Web Tool - Upload</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>APK Tool</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="upload.html" class="active">Upload</a>
+            </nav>
+        </header>
+
+        <main>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="appName">Nome do App</label>
+                    <input type="text" id="appName" required>
+                </div>
+                <div class="form-group">
+                    <label for="appDescription">Descrição</label>
+                    <textarea id="appDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="appImage">Imagem do App (.png, .jpg)</label>
+                    <input type="file" id="appImage" accept="image/png, image/jpeg" required>
+                </div>
+                <div class="form-group">
+                    <label for="appApk">Arquivo APK (.apk)</label>
+                    <input type="file" id="appApk" accept=".apk" required>
+                </div>
+                <button type="submit" id="submitButton">Enviar</button>
+            </form>
+            <div id="status"></div>
+        </main>
+    </div>
+
+    <script type="module" src="upload.js"></script>
+</body>
+</html>
