@@ -2,6 +2,15 @@ import supabase from './supabase-client.js';
 
 const apkGrid = document.getElementById('apkGrid');
 const searchInput = document.getElementById('searchInput');
+const loader = document.getElementById('loader-overlay');
+
+function showLoader() {
+    loader.style.display = 'flex';
+}
+
+function hideLoader() {
+    loader.style.display = 'none';
+}
 
 async function fetchApks() {
     const { data, error } = await supabase
@@ -38,8 +47,10 @@ function renderApks(apks) {
 }
 
 async function main() {
+    showLoader();
     const allApks = await fetchApks();
     renderApks(allApks);
+    hideLoader();
 
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
