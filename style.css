@@ -79,6 +79,11 @@ button:hover {
     background-color: #16a34a;
 }
 
+button:disabled {
+    background-color: #4b5563;
+    cursor: not-allowed;
+}
+
 .search-bar {
     margin-bottom: 2rem;
 }
@@ -158,4 +163,51 @@ button:hover {
 #status.error {
     background-color: #991b1b;
     color: #fee2e2;
+}
+
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loader {
+    border: 8px solid var(--border-color);
+    border-top: 8px solid var(--primary-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.progress-container {
+    width: 100%;
+    background-color: var(--input-bg);
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 20px;
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    text-align: center;
+    line-height: 20px;
+    color: var(--text-color);
+    font-weight: bold;
+    transition: width 0.2s ease-in-out;
 }
