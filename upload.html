@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APK Web Tool - Upload</title>
+    <title>APK Web Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,10 +29,16 @@
                 <div class="form-group">
                     <label for="appImage">Imagem do App (.png, .jpg)</label>
                     <input type="file" id="appImage" accept="image/png, image/jpeg" required>
+                    <div id="imageProgressContainer" class="progress-container">
+                        <div id="imageProgressBar" class="progress-bar">0%</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="appApk">Arquivo APK (.apk)</label>
                     <input type="file" id="appApk" accept=".apk" required>
+                    <div id="apkProgressContainer" class="progress-container">
+                        <div id="apkProgressBar" class="progress-bar">0%</div>
+                    </div>
                 </div>
                 <button type="submit" id="submitButton">Enviar</button>
             </form>
